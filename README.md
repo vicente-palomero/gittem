@@ -1,13 +1,13 @@
 # git_toolset
 Scripts to simplify git usage.
 
-## global_up
+## Global_setup
 This script helps to set up an initial global configuration for git.
 It asks for the user name, the email, the default editor (`nano` recommended), and if a `.gitignore_global` file should be created.
 
 You can run this script by executing:
 ```bash
-./global_up.sh
+./global_setup.sh
 ```
 
 ## hooks_installer
@@ -28,7 +28,7 @@ Here you can find some tips and tips for git. Run it by:
 ./tips.sh
 ```
 
-Or, if you installed it as an alias via `global_up.sh`:
+Or, if you installed it as an alias via `global_setup.sh`:
 ```
 git tips
 ```
