@@ -23,6 +23,7 @@ branch() {
   echo "Branching tips"
   echo "=============="
   echo "Create a new branch:        git checkout -b <branch_name>"
+  echo "Rename a branch:            git branch -m <branch_name>"
   echo "Remove a branch:            git branch -d <branch_name>"
   echo ""
 }

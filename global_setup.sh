@@ -28,11 +28,13 @@ if [[ -z $gitignore ]] || [[ $gitignore == "Y" ]]; then
 fi;
 
 echo "The next alias will be installed:"
-echo "  tip: will show tips and recipes for git"
+echo "  tip:     show tips and recipes for git"
+echo "  cleanup: remove already merged branches in master and dev*"
 
 read -p "Do you want to add these aliases? [Y/n]: " alias
 if [[ -z $alias ]] || [[ $alias == "Y" ]]; then
     $(git config --global alias.tip "!bash $(pwd)/tips.sh")
+    $(git config --global alias.cleanup "!git branch --merged | egrep -v \"(^\*|master|dev)\" | xargs git branch -d")
 fi;
 
 echo "Current Git global configuration:"
