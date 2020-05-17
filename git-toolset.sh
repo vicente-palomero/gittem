@@ -15,10 +15,6 @@ function usage(){
       -h --help     Show this help.
       -g --global   Runs global configuration script.
       -i --install  Installs hooks (calls hook_installer.sh with the path set as parameter).
-      -t --tips     Shows all tips.
-      -b --branch   Shows branch-related all tips.
-      -c --crud     Shows crud-related all tips.
-      -s --stage    Shows stage-related all tips.
       -v --version  Shows the current version.
   "
 }
@@ -44,10 +40,6 @@ do
     -g|--global) ./global_setup.sh;;
     -h|--help) usage ;;
     -i|--install) ./hooks_installer.sh -r `cleanInput $3`;;
-    -t|--tips) ./tips.sh -a;;
-    -b|--branch) ./tips.sh -i branch;;
-    -c|--crud) ./tips.sh -i crud;;
-    -s|--stage) ./tips.sh -i stage;;
     -v|--version) version ;;
     (--) shift;break;;
     (-*) echo "$0: error - unrecognized option $2" 1>&2; exit 1;;
