@@ -12,14 +12,14 @@ function version(){
 function usage(){
   echo "$(basename $0) [-h] -- Git hooks manager and tipper.
     where
-      -h --help Show this help.
-      -g --global Runs global configuration script.
-      -i --install Installs hooks (calls hook_installer.sh with the path set as parameter).
-      -t --tips Shows all tips.
-      -b --branch Shows branch-related all tips.
-      -c --crud Shows crud-related all tips.
-      -s --stage Shows stage-related all tips.
-      -v --version Shows the current version.
+      -h --help     Show this help.
+      -g --global   Runs global configuration script.
+      -i --install  Installs hooks (calls hook_installer.sh with the path set as parameter).
+      -t --tips     Shows all tips.
+      -b --branch   Shows branch-related all tips.
+      -c --crud     Shows crud-related all tips.
+      -s --stage    Shows stage-related all tips.
+      -v --version  Shows the current version.
   "
 }
 
