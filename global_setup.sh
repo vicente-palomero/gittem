@@ -1,8 +1,11 @@
 #!/bin/bash
 source  "./src/dialogs.sh"
 
-step_id=1
-say "[$step_id] Setting git user name and password"
+say "Steps included in this script:"
+
+cat $0 | grep '\[STEP' | grep -v "cat" | sed 's/say //' | sed 's/\"//g' | sed 's/\[/\t - [/'
+
+say "[STEP 1] Setting git user name and password"
 
 user=$(git config --global user.name)
 email=$(git config --global user.email)
@@ -27,8 +30,7 @@ if [[ -z $new_editor ]]; then
 fi;
 $(git config --global --replace-all core.editor "$new_editor")
 
-step_id=2
-say "[$step_id] Including global .gitignore file"
+say "[STEP 2] Including global .gitignore file"
 
 gitignore=$(ask "Do you want to include a global .gitignore file?")
 
@@ -39,8 +41,7 @@ if [[ -z $gitignore ]] || [[ $gitignore == "Y" ]]; then
     $(git config --global --replace-all core.excludesfile ~/.gitignore_global)
 fi;
 
-step_id=3
-say "[$step_id] Alias installation"
+say "[STEP 3] Alias installation"
 
 echo "The next alias will be installed:"
 echo "  tip:     show tips and recipes for git"
@@ -52,8 +53,7 @@ if [[ -z $alias ]] || [[ $alias == "Y" ]]; then
     $(git config --global alias.cleanup "!git branch --merged | egrep -v \"(^\*|master|dev)\" | xargs git branch -d")
 fi;
 
-step_id=4
-say "[$step_id] Git prompt installation"
+say "[STEP 4] Git prompt installation"
 prompt=$(ask "Do you want to add the branch you are working on into your .bashrc file?")
 
 if [[ -z $prompt ]] || [[ $prompt == "Y" ]]; then
