@@ -1,25 +1,39 @@
 #!/bin/bash
+source  "./src/dialogs.sh"
+
+say "Steps included in this script:"
+
+cat $0 | grep '\[STEP' | grep -v "cat" | sed 's/say //' | sed 's/\"//g' | sed 's/\[/\t - [/'
+
+say "[STEP 1] Setting git user name and password"
+
 user=$(git config --global user.name)
 email=$(git config --global user.email)
 editor="nano"
 
-read -p "Git user name [$user]: " new_user
-read -p "Git email [$email]: " new_email
+new_user=$(fill "Git user name [$user]:")
 if [[ ! -z $new_user ]] && [[ $new_user != $user ]]; then
     $(git config --global --replace-all user.name "$new_user")
 fi;
+
+
+new_email=$(fill "Git email [$email]:")
 
 if [[ ! -z $new_email ]] && [[ $new_email != $email ]]; then
     $(git config --global --replace-all user.email "$new_email")
 fi;
 
-read -p "Git editor [nano]: " new_editor
+
+new_editor=$(fill "Git editor [nano]:")
 if [[ -z $new_editor ]]; then
     new_editor="$editor"
 fi;
 $(git config --global --replace-all core.editor "$new_editor")
 
-read -p "Do you want to include a global .gitignore file? [Y/n]: " gitignore
+say "[STEP 2] Including global .gitignore file"
+
+gitignore=$(ask "Do you want to include a global .gitignore file?")
+
 if [[ -z $gitignore ]] || [[ $gitignore == "Y" ]]; then
     $(echo "## macOS" > ~/.gitignore_global)
     $(echo ".DS_Store" >> ~/.gitignore_global)
@@ -27,17 +41,21 @@ if [[ -z $gitignore ]] || [[ $gitignore == "Y" ]]; then
     $(git config --global --replace-all core.excludesfile ~/.gitignore_global)
 fi;
 
+say "[STEP 3] Alias installation"
+
 echo "The next alias will be installed:"
 echo "  tip:     show tips and recipes for git"
 echo "  cleanup: remove already merged branches in master and dev*"
 
-read -p "Do you want to add these aliases? [Y/n]: " alias
+alias=$(ask "Do you want to add these aliases?:")
 if [[ -z $alias ]] || [[ $alias == "Y" ]]; then
     $(git config --global alias.tip "!bash $(pwd)/tips.sh")
     $(git config --global alias.cleanup "!git branch --merged | egrep -v \"(^\*|master|dev)\" | xargs git branch -d")
 fi;
 
-read -p "Do you want to add the branch you are working on into your .bashrc file? [Y/n]: " prompt
+say "[STEP 4] Git prompt installation"
+prompt=$(ask "Do you want to add the branch you are working on into your .bashrc file?")
+
 if [[ -z $prompt ]] || [[ $prompt == "Y" ]]; then
     $(echo "" >> ~/.bashrc)
     $(echo "# Add git branch in prompt (from git-tools)" >> ~/.bashrc)
@@ -47,15 +65,15 @@ if [[ -z $prompt ]] || [[ $prompt == "Y" ]]; then
     $(echo "" >> ~/.bashrc) 
 fi;
 
-echo "Current Git global configuration:"
-echo "$(git config --global -l)"
-echo ""
-echo "If you want to edit the configuration, please run:"
-echo "  $new_editor ~/.gitconfig"
-echo ""
-echo "If you want to edit the .gitignore_global file, please run:"
-echo "  $new_editor ~/.gitignore_global"
-echo ""
-echo "And if you need to reload your .bashrc file, please run:"
-echo "  source ~/.bashrc"
-echo ""
+say "Current Git global configuration: \n\
+***
+$(git config --global -l) \n\
+***
+If you want to edit the configuration, please run: \n\
+\t $new_editor ~/.gitconfig \n\
+
+If you want to edit the .gitignore_global file, please run: \n\
+\t $new_editor ~/.gitignore_global \n\
+
+And if you need to reload your .bashrc file, please run: \n\
+\t  source ~/.bashrc"
