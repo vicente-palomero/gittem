@@ -12,7 +12,7 @@ for candidate in $candidates; do
     read -ra splitted <<< "$candidate"
     hook_name=${splitted[0]}
     path=${splitted[1]}
-    echo "Running hook $hook_name"
+    echo "Running hook $hook_name:"
     $path
     echo "Done."
 done
