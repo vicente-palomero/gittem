@@ -1,0 +1,37 @@
+***********************************************
+*********** TESTING STUFF WITH BATS ***********
+***********************************************
+
+****** BATS CORE CONFIGURATION ******
+
+Sample for launching BATS test from this folder:
+
+$ bats sample.sh
+
+For installing BATS
+
+$ git clone https://github.com/sstephenson/bats.git
+$ cd bats
+$ ./install.sh /usr/local
+
+Note that you may need to run install.sh with sudo if you do not have permission to write to the installation prefix.
+
+****** BATS DEPENDENCIES ******
+
+For installing dependencies
+$ git submodule init
+$ git submodule update
+
+****** RUNNING BATS TESTS ******
+
+To run tests using bats dependencies is mandatory load them using helper method "load_lib" located at test_helper library.
+
+load "./test_helper/load_lib"
+ 
+load_lib bats-assert
+
+@test "addition using bc" {
+  result="$(echo 2+2 | bc)"
+  assert_equal "$result" 4
+}
+
