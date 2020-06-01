@@ -1,0 +1,7 @@
+[pre-commit]
+    task=hooks/precommit/task
+    dummy=hooks/precommit/dummy
+
+[post-commit]
+    task2=hooks/precommit/task2
+    dummy2=hooks/precommit/dummy2

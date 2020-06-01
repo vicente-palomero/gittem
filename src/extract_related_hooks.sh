@@ -11,8 +11,33 @@ function count_lines_until_next_hook() {
 function extract_related_hooks() {
     local filename=$1
     local hook_group=$2
+
+    if ! [ -f "$filename" ]; then
+	echo "File [$filename] does not exist" 1>&2
+	exit 2
+    fi
+
     local max_lines=$(cat $filename | wc -l)
+
+    if [ $max_lines -eq 0 ]; then
+	echo "File [$filename] is empty" 1>&2
+	exit 3
+    fi
+
     local hook_line_number=`cat $filename | grep -n $hook_group | cut -d':' -f1`
+    local hook_n_lines=`echo "$hook_line_number" | wc -l`
+
+    if [ -z "$hook_line_number" ]; then 
+	echo ""
+	exit
+    fi
+
+    # When more than one hook_group is found, raise an error.
+    if [ "$hook_n_lines" -ne "1" ]; then 
+	echo "Found more than one occurence for candidate hook [$hook_group]" 1>&2
+	exit 1
+    fi
+
     local lines_till_next_hook=$(count_lines_until_next_hook $filename $hook_line_number)
 
     if [[ $lines_till_next_hook -eq -1 ]]; then

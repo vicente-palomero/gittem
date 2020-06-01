@@ -1,5 +1,4 @@
-load "./test_helper/load_lib"
-load_lib bats-assert
+load "./test_helper/bats-assert/load"
 
 @test "addition using bc" {
   result="$(echo 2+2 | bc)"
