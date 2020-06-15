@@ -1,6 +1,17 @@
 #!/bin/bash
 source  "./src/dialogs.sh"
 
+function write_hook () {
+    if [ -f "$1/$2" ]; then
+        echo "git hook \"$2\"" >> $1/$2
+    else
+        echo "#!/bin/sh
+
+git hook \"$2\"" > $1/$2
+    chmod u+x $1/$2
+    fi
+}
+
 say "Steps included in this script:"
 
 cat $0 | grep '\[STEP' | grep -v "cat" | sed 's/say //' | sed 's/\"//g' | sed 's/\[/\t - [/'
@@ -64,6 +75,24 @@ if [[ -z $prompt ]] || [[ $prompt == "Y" ]]; then
     $(echo "# End Add git branch in prompt from git-tools)" >> ~/.bashrc)
     $(echo "" >> ~/.bashrc) 
 fi;
+
+say "[STEP 5] Add git templatedir folder"
+$(git config --global --replace-all init.templatedir '~/.git-templates')
+hook_path=~/.git-templates/hooks
+mkdir -p $hook_path
+
+write_hook $hook_path "applypatch-msg"
+write_hook $hook_path "commit-msg"
+write_hook $hook_path "fsmonitor-watchman"
+write_hook $hook_path "post-update"
+write_hook $hook_path "pre-applypatch"
+write_hook $hook_path "pre-commit"
+write_hook $hook_path "pre-merge-commit"
+write_hook $hook_path "prepare-commit-msg"
+write_hook $hook_path "pre-push"
+write_hook $hook_path "pre-rebase"
+write_hook $hook_path "pre-receive"
+write_hook $hook_path "update"
 
 say "Current Git global configuration: \n\
 ***
