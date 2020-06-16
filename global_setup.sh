@@ -45,7 +45,7 @@ say "[STEP 2] Including global .gitignore file"
 
 gitignore=$(ask "Do you want to include a global .gitignore file?")
 
-if [[ -z $gitignore ]] || [[ $gitignore == "Y" ]]; then
+if [[ -z $gitignore ]] || [[ $gitignore == "y" ]]; then
     $(echo "## macOS" > ~/.gitignore_global)
     $(echo ".DS_Store" >> ~/.gitignore_global)
     $(echo "" >> ~/.gitignore_global)
@@ -57,17 +57,20 @@ say "[STEP 3] Alias installation"
 echo "The next alias will be installed:"
 echo "  tip:     show tips and recipes for git"
 echo "  cleanup: remove already merged branches in master and dev*"
-
+echo "  hook:    enable git-config hooks manager as git alias"
 alias=$(ask "Do you want to add these aliases?:")
-if [[ -z $alias ]] || [[ $alias == "Y" ]]; then
-    $(git config --global alias.tip "!bash $(pwd)/tips.sh")
-    $(git config --global alias.cleanup "!git branch --merged | egrep -v \"(^\*|master|dev)\" | xargs git branch -d")
+echo $alias
+
+if [[ -z $alias ]] || [[ $alias == "y" ]]; then
+    $(git config --global alias.tip "!bash $(pwd)/tips.sh");
+    $(git config --global alias.cleanup "!git branch --merged | egrep -v \"(^\*|master|dev)\" | xargs git branch -d");
+    $(git config --global alias.hook "!bash $(pwd)/hook_mgr.sh")
 fi;
 
 say "[STEP 4] Git prompt installation"
 prompt=$(ask "Do you want to add the branch you are working on into your .bashrc file?")
 
-if [[ -z $prompt ]] || [[ $prompt == "Y" ]]; then
+if [[ -z $prompt ]] || [[ $prompt == "y" ]]; then
     $(echo "" >> ~/.bashrc)
     $(echo "# Add git branch in prompt (from git-tools)" >> ~/.bashrc)
     $(echo "parse_git_branch() { git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/' ; }" >> ~/.bashrc)

@@ -1,8 +1,11 @@
 #!/bin/bash
 
-source "./src/extract_related_hooks.sh"
+here=$(pwd)
 
-path_to_file='./hooks.ini'
+GIT_TOOLSET_HOME='/home/luis/Documentos/GitHub/git-toolset/'
+source "$GIT_TOOLSET_HOME/./src/extract_related_hooks.sh"
+
+path_to_file="$(pwd)/.git/git-toolset/.config"
 hook_name="$@"
 
 candidates=$(extract_related_hooks $path_to_file $hook_name);
