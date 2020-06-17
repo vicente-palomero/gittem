@@ -49,6 +49,10 @@ if [[ -z $gitignore ]] || [[ $gitignore == "y" ]]; then
     $(echo "## macOS" > ~/.gitignore_global)
     $(echo ".DS_Store" >> ~/.gitignore_global)
     $(echo "" >> ~/.gitignore_global)
+    $(echo "## Vim" >> ~/.gitignore_global)
+    $(echo ".*.swp" >> ~/.gitignore_global)
+    $(echo ".*.swo" >> ~/.gitignore_global)
+    $(echo "" >> ~/.gitignore_global)
     $(git config --global --replace-all core.excludesfile ~/.gitignore_global)
 fi;
 

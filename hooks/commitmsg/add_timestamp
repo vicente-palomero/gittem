@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+datetime= date +'[%Y-%m-%d %H:%M:%S]'
+
+echo $0
+COMMIT_MSG_FILE=$(cat "${1:?Missing commit message file}")
+echo $datetime
+echo $1
+echo $COMMIT_MSG_FILE
+exit 1
