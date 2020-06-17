@@ -20,7 +20,7 @@ for candidate in $candidates; do
     echo "Running hook $hook_name:"
     $path
     if [ $? != 0 ]; then
-        echo "Hook $hook_name failed. Aborting"
+        echo "Hook $hook_name failed. Aborting."
         exit 1
     fi
     echo "Done."

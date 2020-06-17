@@ -1,10 +1,7 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-datetime= date +'[%Y-%m-%d %H:%M:%S]'
+datetime=$(date +'[%Y-%m-%d %H:%M:%S]')
+commit_path=.git/COMMIT_EDITMSG
 
-echo $0
-COMMIT_MSG_FILE=$(cat "${1:?Missing commit message file}")
-echo $datetime
-echo $1
-echo $COMMIT_MSG_FILE
-exit 1
+content=$(cat $commit_path)
+echo "$datetime $content" > $commit_path
