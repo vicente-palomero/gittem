@@ -1,5 +1,8 @@
 [pre-commit]
     sample=hooks/precommit/precommit_sample
 
+[commit-msg]
+    add_timestamp=hooks/commitmsg/add_timestamp
+
 [pre-push]
     run_unit=src/unit_runner.sh

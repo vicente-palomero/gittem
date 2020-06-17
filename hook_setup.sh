@@ -21,12 +21,4 @@ say "Installing hooks library"
 config_hooks_lib_path="$project/.git/git-toolset/hooks"
 cp -r hooks $config_hooks_lib_path
 
-say "Enabling pre-commit hooks"
-
-echo '#!/bin/sh
-
-git hook "$@" pre-commit' > $project_git/hooks/pre-commit
-chmod u+x $project_git/hooks/pre-commit
-
-
 say "Git-tools/hooks mgr setup correctly."

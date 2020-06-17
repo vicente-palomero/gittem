@@ -4,7 +4,6 @@ function cleanInput() {
     echo $1 | sed "s/'//g"
 }
 
-
 function version(){
   echo "Git toolset version 0.0.1"
 }
