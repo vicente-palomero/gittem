@@ -1,62 +1,56 @@
 # git_toolset
 Scripts to simplify git usage.
 
-## Global installation
+## tl;dr: Quick installation and setup in your repo:
 
-Install method generates a symlink at of git-toolset.sh file at  ~/bin/ folder. This git-toolset script acts a simple interface for the different tools included.
+- Install `git-toolset` running: `./install.sh`
+- Add `export PATH="~/bin:$PATH"` to your `.bashrc` file
+- Set up git-toolset running: `git-toolset -g`
+- Add `git-toolset` to a git project running: `git-toolset -i`
+
+## Detailed installation
+
+Install method generates a symlink at of `git-toolset.sh` file at `~/bin/` folder. This `git-toolset` script acts a simple interface for the different tools included.
 
 ```bash
 ./install.sh
 ```
 
+## Usage
+
+The script `git-toolset` enables the usage of this toolset everywhere in your code.
+
 ## Global_setup
 This script helps to set up an initial global configuration for git.
-It asks for the user name, the email, the default editor (`nano` recommended), and if a `.gitignore_global` file should be created.
+It asks for the user name, the email, the default editor (`nano` recommended), if a `.gitignore_global` file should modify the prompt for adding a reference to the current branch.
 
 You can run this script by executing:
 ```bash
-./global_setup.sh
+./git-toolset -g
 ```
 
-## hooks_installer
+## Installation of hook toolset
 
-List of hook scripts to install:
-* No hook defined yet
-
-You can run this script by executing:
-```bash
-./hooks_installer.sh -r PATH_OF_REPO
-```
-
-The results of this installation are in the `.git/hooks/` folder of your repository.
-
-## tips
-Here you can find some tips and tips for git. Run it by:
-```bash
-./tips.sh
-```
-
-Or, if you installed it as an alias via `global_setup.sh`:
-```
-git tips
-```
-
-## git-toolset
-
-This script interacts as an interface to manage all different tools directly from a common entrypoint
-
-Run it by:
-```bash
-./git-tools.sh
-```
-
-Or, if you have installed the tools:
+This hook toolset lets you adding and removing hooks easily:
 
 ```bash
-git-tools
+./git-toolset -i
 ```
 
+After running it, a folder `git-toolset` is created inside yout `.git` folder. There is a file called `config` in this new folder, initially with this content:
 
+```bash
+[commit-msg]
+    add_timestamp=hooks/commitmsg/add_timestamp
+```
+
+This `add_timestamp` hook will be executed each time you do a commit, and it adds a timestamp in the beginning of the commit message. If you want to add or remove other hooks, you have to edit this file following that format.
+
+## Hooks
+`git-toolset` installs 3 different hooks:
+-. `tips` will give you some tips and useful tricks for git.
+-. `cleanup` will remove already merged branches on master and any branch starting by `dev`.
+-. `hook`, which is used for running the hook related with a git step. You also can run it separately.
 
 ## Tips and ideas
 
