@@ -1,5 +1,7 @@
 #!/bin/bash
 
+toolset_home="$(dirname "$(readlink -f "$0")")"
+
 function cleanInput() {
     echo $1 | sed "s/'//g"
 }
@@ -13,7 +15,7 @@ function usage(){
     where
       -h --help     Show this help.
       -g --global   Runs global configuration script.
-      -i --install  Installs hooks (calls hook_installer.sh with the path set as parameter).
+      -i --install  Installs hooks in the current project folder.
       -v --version  Shows the current version.
   "
 }
@@ -36,9 +38,9 @@ set -- $options
 while [ $# -gt 0 ]
 do
     case $1 in
-    -g|--global) ./global_setup.sh;;
+    -g|--global) $toolset_home/global_setup.sh;;
     -h|--help) usage ;;
-    -i|--install) ./hooks_installer.sh -r `cleanInput $3`;;
+    -i|--install) $toolset_home/hook_setup.sh `cleanInput $(pwd)`;;
     -v|--version) version ;;
     (--) shift;break;;
     (-*) echo "$0: error - unrecognized option $2" 1>&2; exit 1;;
