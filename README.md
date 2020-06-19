@@ -26,7 +26,7 @@ It asks for the user name, the email, the default editor (`nano` recommended), i
 
 You can run this script by executing:
 ```bash
-./git-toolset -g
+git-toolset -g
 ```
 
 ## Installation of hook toolset
@@ -34,7 +34,7 @@ You can run this script by executing:
 This hook toolset lets you adding and removing hooks easily:
 
 ```bash
-./git-toolset -i
+git-toolset -i
 ```
 
 After running it, a folder `git-toolset` is created inside yout `.git` folder. There is a file called `config` in this new folder, initially with this content:

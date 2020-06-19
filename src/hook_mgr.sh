@@ -1,8 +1,8 @@
 #!/bin/bash
 
-toolset_home="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+here="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-source "$toolset_home/src/extract_related_hooks.sh"
+source "$here/extract_related_hooks.sh"
 
 toolset_local=$(pwd)/.git/git-toolset
 path_to_config=$toolset_local/.config

@@ -1,18 +1,23 @@
 #!/bin/bash
-toolset_home="$(dirname "$(readlink -f "$0")")"
+here="$(dirname "$(readlink -f "$0")")"
 
-source  "$toolset_home/src/dialogs.sh"
+source  "$here/dialogs.sh"
 
 function write_hook () {
-    if [ -f "$1/$2" ]; then
-        if [ $(grep "git hook" $1/$2 | wc -l) == 0 ]; then
-            echo "git hook \"$2\"" >> $1/$2
+
+    local hook_path hook_name
+    hook_path=$1
+    hook_name=$2
+
+    if [ -f "$hook_path/$hook_name" ]; then
+        if [ $(grep "git hook" $hook_path/$hook_name | wc -l) == 0 ]; then
+            echo "git hook \"$hook_name\"" >> $hook_path/$hook_name
         fi
     else
         echo "#!/bin/sh
 
-git hook \"$2\"" > $1/$2
-    chmod u+x $1/$2
+git hook \"$hook_path\"" > $hook_path/$hook_name
+    chmod u+x $hook_path/$hook_name
     fi
 }
 
@@ -54,7 +59,7 @@ if [[ -z $gitignore ]] || [[ $gitignore == "y" ]]; then
     $(echo ".DS_Store" >> ~/.gitignore_global)
     $(echo "" >> ~/.gitignore_global)
     $(echo "## Vim" >> ~/.gitignore_global)
-    $(echo ".*.swp" >> ~/.gitattributes_global)
+    $(echo ".*.swp" >> ~/.gitignore_global)
     $(echo ".*.swo" >> ~/.gitignore_global)
     $(echo "" >> ~/.gitignore_global)
     $(git config --global --replace-all core.excludesfile ~/.gitignore_global)
@@ -70,9 +75,9 @@ alias=$(ask "Do you want to add these aliases?:")
 echo $alias
 
 if [[ -z $alias ]] || [[ $alias == "y" ]]; then
-    $(git config --global alias.tip "!bash $toolset_home/tips.sh");
+    $(git config --global alias.tip "!bash $here/tips.sh");
     $(git config --global alias.cleanup "!git branch --merged | egrep -v \"(^\*|master|dev)\" | xargs git branch -d");
-    $(git config --global alias.hook "!bash $toolset_home/hook_mgr.sh")
+    $(git config --global alias.hook "!bash $here/hook_mgr.sh")
 fi;
 
 say "[STEP 4] Git prompt installation"
