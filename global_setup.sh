@@ -1,9 +1,13 @@
 #!/bin/bash
-source  "./src/dialogs.sh"
+toolset_home="$(dirname "$(readlink -f "$0")")"
+
+source  "$toolset_home/src/dialogs.sh"
 
 function write_hook () {
     if [ -f "$1/$2" ]; then
-        echo "git hook \"$2\"" >> $1/$2
+        if [ $(grep "git hook" $1/$2 | wc -l) == 0 ]; then
+            echo "git hook \"$2\"" >> $1/$2
+        fi
     else
         echo "#!/bin/sh
 
@@ -49,6 +53,10 @@ if [[ -z $gitignore ]] || [[ $gitignore == "y" ]]; then
     $(echo "## macOS" > ~/.gitignore_global)
     $(echo ".DS_Store" >> ~/.gitignore_global)
     $(echo "" >> ~/.gitignore_global)
+    $(echo "## Vim" >> ~/.gitignore_global)
+    $(echo ".*.swp" >> ~/.gitattributes_global)
+    $(echo ".*.swo" >> ~/.gitignore_global)
+    $(echo "" >> ~/.gitignore_global)
     $(git config --global --replace-all core.excludesfile ~/.gitignore_global)
 fi;
 
@@ -62,13 +70,13 @@ alias=$(ask "Do you want to add these aliases?:")
 echo $alias
 
 if [[ -z $alias ]] || [[ $alias == "y" ]]; then
-    $(git config --global alias.tip "!bash $(pwd)/tips.sh");
+    $(git config --global alias.tip "!bash $toolset_home/tips.sh");
     $(git config --global alias.cleanup "!git branch --merged | egrep -v \"(^\*|master|dev)\" | xargs git branch -d");
-    $(git config --global alias.hook "!bash $(pwd)/hook_mgr.sh")
+    $(git config --global alias.hook "!bash $toolset_home/hook_mgr.sh")
 fi;
 
 say "[STEP 4] Git prompt installation"
-prompt=$(ask "Do you want to add the branch you are working on into your .bashrc file?")
+prompt=$(ask "Change the prompt for showing the branch you are working on? (Requires writing on your .bashrc file)")
 
 if [[ -z $prompt ]] || [[ $prompt == "y" ]]; then
     $(echo "" >> ~/.bashrc)

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+datetime=$(date +'[%Y-%m-%d %H:%M:%S]')
+commit_path=.git/COMMIT_EDITMSG
+
+content=$(cat $commit_path)
+echo "$datetime $content" > $commit_path
