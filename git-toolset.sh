@@ -7,7 +7,7 @@ function cleanInput() {
 }
 
 function version(){
-  echo "Git toolset version 0.0.1"
+  echo "Git toolset version 0.1.0"
 }
 
 function usage(){
