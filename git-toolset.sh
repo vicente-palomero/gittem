@@ -38,9 +38,9 @@ set -- $options
 while [ $# -gt 0 ]
 do
     case $1 in
-    -g|--global) $toolset_home/global_setup.sh;;
+    -g|--global) $toolset_home/src/global_setup.sh;;
     -h|--help) usage ;;
-    -i|--install) $toolset_home/hook_setup.sh `cleanInput $(pwd)`;;
+    -i|--install) $toolset_home/src/hook_setup.sh `cleanInput $(pwd)`;;
     -v|--version) version ;;
     (--) shift;break;;
     (-*) echo "$0: error - unrecognized option $2" 1>&2; exit 1;;
