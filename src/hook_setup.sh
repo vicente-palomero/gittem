@@ -21,7 +21,7 @@ mkdir -p $config_path
 cp $here/sample/hooks.ini.sample $config_file
 
 say "Installing hooks library"
-config_hooks_lib_path="$project/.git/git-toolset/hooks"
+config_hooks_lib_path="$project/.git/git-toolset/"
 cp -r $here/hooks $config_hooks_lib_path
 
 say "Run git init for copying hook templates"
