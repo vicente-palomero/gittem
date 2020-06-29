@@ -8,9 +8,10 @@ usage() {
   echo "---------------"
   echo "  all       Show all tips"
   echo "  branch    Show tips related with branching"
-  echo "  crud      Show how create, read, update or delete files"
-  echo "  stage     Show tips related with staging and unstaging files"
   echo "  changelog Show tips related with changelog events"
+  echo "  crud      Show how create, read, update or delete files"
+  echo "  revert    Show how to revert some git actions"
+  echo "  stage     Show tips related with staging and unstaging files"
   echo ""
   echo "Usage"
   echo "-----"
@@ -70,12 +71,24 @@ changelog() {
   echo ""
 }
 
+revert() {
+  echo -e "\033[1mReverting actions\033[0m"
+  echo "================="
+  echo "Revert 'git add':                              git reset HEAD <file>"
+  echo "Revert 'git commit (keep staging)':            git reset HEAD~1 --soft"
+  echo "Revert 'git commit (unkeep staging)':          git reset HEAD~1"
+  echo "Revert 'git push (keeping history, SAFER)':    git revert <unwanted commit hash>; git push"
+  echo "Revert 'git push (changing history, UNSAFER)': git reset --hard <valid hash id>; git push --force"
+  echo ""
+  echo "Disclaimer: There are multiple ways for doing these actions. Be careful with all this stuff"
+}
 
 all() {
   branch
   crud
-  stage
   changelog
+  revert
+  stage
 }
 
 while getopts i:a o; do
@@ -95,8 +108,9 @@ echo ""
 case $which in
 "branch") branch ;;
 "crud") crud;;
-"stage") stage ;;
 "changelog") changelog ;;
+"revert") revert;;
+"stage") stage ;;
 "all") all ;;
 *) echo "Topic $which is not supported." ;;
 
