@@ -13,7 +13,6 @@ function setup() {
     (
 	cd ${sample_project}
 	git init
-	
     )
 }
 
