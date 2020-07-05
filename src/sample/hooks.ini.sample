@@ -1,2 +1,5 @@
 [commit-msg]
     add_timestamp=hooks/commitmsg/add_timestamp
+
+[pre-commit]
+#    strip_whitespaces=hooks/precommit/stripspace
