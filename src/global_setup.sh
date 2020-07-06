@@ -119,6 +119,7 @@ If you want to edit the configuration, please run: \n\
 
 If you want to edit the .gitignore_global file, please run: \n\
 \t $new_editor ~/.gitignore_global \n\
+(in case you want to tweak this file, you can find useful .gitignore configurations at: https://github.com/github/gitignore/) \n\
 
 And if you need to reload your .bashrc file, please run: \n\
 \t  source ~/.bashrc"
