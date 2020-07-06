@@ -8,6 +8,10 @@ toolset_local=$(pwd)/.git/git-toolset
 path_to_config=$toolset_local/.config
 hook_name="$@"
 
+if [ ! -f "$path_to_config" ]; then
+  exit
+fi
+
 candidates=$(extract_related_hooks $path_to_config $hook_name);
 
 for candidate in $candidates; do
