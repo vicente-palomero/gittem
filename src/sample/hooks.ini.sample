@@ -1,3 +1,6 @@
 #This is a sample hooks file which includes a sample hook, use it as template adding your hooks
 [commit-msg]
     add_timestamp=hooks/commitmsg/add_timestamp
+
+[pre-commit]
+#    strip_whitespaces=hooks/precommit/stripspace
