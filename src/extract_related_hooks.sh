@@ -46,6 +46,7 @@ function extract_related_hooks() {
 
     related_hooks=$(cat $filename |
         grep -A$lines_till_next_hook $hook_group |
+	grep -v "^[[:blank:]]*#" |
 	grep -v $hook_group |
 	grep "=" |
 	sed 's/ //g')

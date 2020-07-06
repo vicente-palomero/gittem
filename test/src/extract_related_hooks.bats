@@ -59,7 +59,7 @@ source "$ROOT_FOLDER/src/extract_related_hooks.sh"
   assert_output ""
 }
 
-@test "When hooks.ini file contains more than one hooks block and first ones the searched one, should return list with candidate hooks" {
+@test "When hooks.ini file contains more than one hooks block and first ones the searched one, should return list with candidate hooks (getting first hook)" {
 
   #Arrange
   local candidate_file="$TEST_FOLDER/assets/hooks_ini.files/hooks.ini.two.valid.blocks"
@@ -72,7 +72,7 @@ source "$ROOT_FOLDER/src/extract_related_hooks.sh"
   assert_output "task=hooks/precommit/task dummy=hooks/precommit/dummy" 
 }
 
-@test "When hooks.ini file contains more than one hooks block and first ones the searched one, should return list with candidate hooks 1" {
+@test "When hooks.ini file contains more than one hooks block and first ones the searched one, should return list with candidate hooks (getting last hook)" {
 
   #Arrange
   local candidate_file="$TEST_FOLDER/assets/hooks_ini.files/hooks.ini.two.valid.blocks"
@@ -96,6 +96,18 @@ source "$ROOT_FOLDER/src/extract_related_hooks.sh"
   
   #Assert
   assert_output ""
+}
+
+@test "Should directly NOT considere commented lines at extract_related_hooks" {
+  #Arrange
+  local candidate_file="$TEST_FOLDER/assets/hooks_ini.files/hooks.ini.with.comments"
+  local commit_group_lbl="pre-commit"
+
+  #Act
+  run extract_related_hooks $candidate_file $commit_group_lbl
+  
+  #Assert
+  assert_output "task=hooks/precommit/task task2=hooks/precommit/task2"
 }
 
 @test "When hooks.ini file contains one repeated hooks block should return an error" {

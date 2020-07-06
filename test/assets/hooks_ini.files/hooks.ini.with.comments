@@ -1,0 +1,12 @@
+[pre-commit]
+
+    task=hooks/precommit/task
+    #commented=hooks/commented
+#   commented2=hooks/commented
+    task2=hooks/precommit/task2
+
+
+[post-commit]
+    task2=hooks/precommit/task2
+    dummy2=hooks/precommit/dummy2
+
