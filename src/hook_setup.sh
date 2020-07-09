@@ -1,15 +1,15 @@
 #!/bin/bash
 
 here="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-source "$here/lib/dialogs.sh"
+source "$here/lib/dialog.sh"
 
 project=$1
 
 #should check if .git folder exists
 if [ ! -d "$project" ]; then
   # Take action if $DIR exists. #
-    err "[$project] is not a GIT repository, exiting."
-    exit 1
+  dialog::err "[$project] is not a GIT repository, exiting."
+  exit 1
 fi
 
 project_git="$project/.git"

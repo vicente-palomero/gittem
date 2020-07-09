@@ -10,7 +10,7 @@
 #   Prompt with friendly output
 ##########################
 function dialog::say() {
-    >&2 echo -e "\e[92m$1\e[39m"
+  >&2 echo -e "\e[92m$1\e[39m"
 }
 
 ##########################
@@ -21,7 +21,7 @@ function dialog::say() {
 #   Prompt with warning output
 ##########################
 function dialog::warn() {
-    >&2 echo -e "\e[93m$1\e[39m"
+  >&2 echo -e "\e[93m$1\e[39m"
 }
 
 ##########################
@@ -32,7 +32,7 @@ function dialog::warn() {
 #   Prompt with error output
 ##########################
 function dialog::err() {
-    >&2 echo -e "\e[91m$1\e[39m"
+  >&2 echo -e "\e[91m$1\e[39m"
 }
 
 ##########################
@@ -43,9 +43,7 @@ function dialog::err() {
 #   The answer of a question
 ##########################
 function dialog::ask() {
-  local question=""
-  question=$1
-  read -r -p $'\e[33m'"${question}"$' (y/N) \e[0m' response
+  read -r -p $'\e[33m'"$1"$' (y/N) \e[0m' response
   echo ${response,,}
 }
 
@@ -57,9 +55,7 @@ function dialog::ask() {
 #   The answer of a question
 ##########################
 function dialog::fill() {
-  local question=""
-  question=$1
-  read -r -p $'\e[33m'"${question}"$' \e[0m' response
+  read -r -p $'\e[33m'"$1"$' \e[0m' response
   echo ${response,,}
 }
 
