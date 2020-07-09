@@ -1,7 +1,7 @@
 #!/bin/bash
 here="$(dirname "$(readlink -f "$0")")"
 
-source  "$here/dialogs.sh"
+source  "$here/lib/dialogs.sh"
 
 function write_hook () {
 
@@ -21,11 +21,11 @@ git hook \"$hook_path\"" > $hook_path/$hook_name
     fi
 }
 
-say "Steps included in this script:"
+dialog::say "Steps included in this script:"
 
-cat $0 | grep '\[STEP' | grep -v "cat" | sed 's/say //' | sed 's/\"//g' | sed 's/\[/\t - [/'
+cat $0 | grep '\[STEP' | grep -v "cat" | sed 's/dialog::say //' | sed 's/\"//g' | sed 's/\[/\t - [/'
 
-say "[STEP 1] Setting git user name and password"
+dialog::say "[STEP 1] Setting git user name and password"
 
 user=$(git config --global user.name)
 email=$(git config --global user.email)
@@ -50,9 +50,9 @@ if [[ -z $new_editor ]]; then
 fi;
 $(git config --global --replace-all core.editor "$new_editor")
 
-say "[STEP 2] Including global .gitignore file"
+dialog::say "[STEP 2] Including global .gitignore file"
 
-gitignore=$(ask "Do you want to include a global .gitignore file?")
+gitignore=$(dialog::ask "Do you want to include a global .gitignore file?")
 
 if [[ -z $gitignore ]] || [[ $gitignore == "y" ]]; then
     $(echo "## macOS" > ~/.gitignore_global)
@@ -65,13 +65,13 @@ if [[ -z $gitignore ]] || [[ $gitignore == "y" ]]; then
     $(git config --global --replace-all core.excludesfile ~/.gitignore_global)
 fi;
 
-say "[STEP 3] Alias installation"
+dialog::say "[STEP 3] Alias installation"
 
 echo "The next alias will be installed:"
 echo "  tip:     show tips and recipes for git"
 echo "  cleanup: remove already merged branches in master and dev*"
 echo "  hook:    enable git-config hooks manager as git alias"
-alias=$(ask "Do you want to add these aliases?:")
+alias=$(dialog::ask "Do you want to add these aliases?:")
 echo $alias
 
 if [[ -z $alias ]] || [[ $alias == "y" ]]; then
@@ -80,8 +80,8 @@ if [[ -z $alias ]] || [[ $alias == "y" ]]; then
     $(git config --global alias.hook "!bash $here/hook_mgr.sh")
 fi;
 
-say "[STEP 4] Git prompt installation"
-prompt=$(ask "Change the prompt for showing the branch you are working on? (Requires writing on your .bashrc file)")
+dialog::say "[STEP 4] Git prompt installation"
+prompt=$(dialog::ask "Change the prompt for showing the branch you are working on? (Requires writing on your .bashrc file)")
 
 if [[ -z $prompt ]] || [[ $prompt == "y" ]]; then
     $(echo "" >> ~/.bashrc)
@@ -92,7 +92,7 @@ if [[ -z $prompt ]] || [[ $prompt == "y" ]]; then
     $(echo "" >> ~/.bashrc) 
 fi;
 
-say "[STEP 5] Add git templatedir folder"
+dialog::say "[STEP 5] Add git templatedir folder"
 $(git config --global --replace-all init.templatedir '~/.git-templates')
 hook_path=~/.git-templates/hooks
 mkdir -p $hook_path
@@ -110,7 +110,7 @@ write_hook $hook_path "pre-rebase"
 write_hook $hook_path "pre-receive"
 write_hook $hook_path "update"
 
-say "Current Git global configuration: \n\
+dialog::say "Current Git global configuration: \n\
 ***
 $(git config --global -l) \n\
 ***

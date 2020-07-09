@@ -1,7 +1,7 @@
 #!/bin/bash
-here="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-source "$here/dialogs.sh"
+here="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+source "$here/lib/dialogs.sh"
 
 project=$1
 
@@ -16,17 +16,16 @@ project_git="$project/.git"
 config_path="$project/.git/git-toolset"
 config_file="$config_path/.config"
 
-say "Creating [$config_file]"
+dialog::say "Creating [$config_file]"
 mkdir -p $config_path
 cp $here/sample/hooks.ini.sample $config_file
 
-say "Installing hooks library"
+dialog::say "Installing hooks library"
 config_hooks_lib_path="$project/.git/git-toolset/"
 cp -r $here/hooks $config_hooks_lib_path
 
-say "Run git init for copying hook templates"
+dialog::say "Run git init for copying hook templates"
 git init
 
-say "Git-tools/hooks mgr setup correctly."
-
+dialog::say "Git-tools/hooks mgr setup correctly."
 
