@@ -1,10 +1,12 @@
 #!/bin/bash
+#
+# Script for running hooks
 
 here="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 source "${here}/lib/hook.sh"
 
 toolset_local=$(pwd)/.git/git-toolset
-path_to_config=$toolset_local/.config
+path_to_config=${toolset_local}/.config
 hook_name="$@"
 
 if [[ ! -f "${path_to_config}" ]]; then
@@ -21,3 +23,4 @@ for candidate in ${candidates}; do
   full_path= ${toolset_local}/${path}
   $(hook::run ${hook_name} ${full_path})
 done
+

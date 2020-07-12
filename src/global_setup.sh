@@ -5,8 +5,15 @@
 here="$(dirname "$(readlink -f "$0")")"
 source  "${here}/lib/dialog.sh"
 
+##########################
+# Main function
+# Arguments:
+#   none
+# Outputs:
+#   Dialog of setup
+##########################
 function main() {
-  next_steps
+  summary
 
   step_basic_config "[STEP 1] Setting git user name and password"
   step_gitignore "[STEP 2] Including global .gitignore file"
@@ -14,9 +21,17 @@ function main() {
   step_prompt "[STEP 4] Git prompt installation"
   step_templatedir "[STEP 5] Add git templatedir folder"
 
-  summary
+  what_to_do_now
 }
 
+##########################
+# Write hook in path
+# Arguments:
+#   hook_path
+#   hook_name
+# Outputs:
+#   New hook created in path
+##########################
 function write_hook() {
   local hook_path hook_name
 
@@ -35,6 +50,13 @@ git hook \"${hook_path}\"" > ${hook_path}/${hook_name}
   fi
 }
 
+##########################
+# Step for basic configuration
+# Arguments:
+#   Output message
+# Outputs:
+#   Dialog for basic configuration
+##########################
 function step_basic_config() {
   local message
   messsage=$1
@@ -62,6 +84,13 @@ function step_basic_config() {
   $(git config --global --replace-all core.editor "${new_editor}")
 }
 
+##########################
+# Step for setup gitignore
+# Arguments:
+#   Output message
+# Outputs:
+#   Dialog for new basic gitignore file
+##########################
 function step_gitignore() {
   local gitignore
   local message
@@ -83,6 +112,13 @@ function step_gitignore() {
   fi;
 }
 
+##########################
+# Step for setup alias
+# Arguments:
+#   Output message
+# Outputs:
+#   Dialog for new alias installed
+##########################
 function step_alias() {
   local message
 
@@ -103,6 +139,13 @@ function step_alias() {
   fi;
 }
 
+##########################
+# Step for setup prompt in bashrc
+# Arguments:
+#   Output message
+# Outputs:
+#   Dialog for new prompt for git in bashrc
+##########################
 function step_prompt() {
 
   prompt=$(dialog::ask "Change the prompt for showing the branch you are working on? (Requires writing on your .bashrc file)")
@@ -117,6 +160,13 @@ function step_prompt() {
   fi;
 }
 
+##########################
+# Step for setup templatedir
+# Arguments:
+#   Output message
+# Outputs:
+#   Dialog for new templatedir
+##########################
 function step_templatedir() {
   local message
 
@@ -141,12 +191,22 @@ function step_templatedir() {
   write_hook ${hook_path} "update"
 }
 
-function next_steps() {
+##########################
+# Show summary of next steps in this script
+# Outputs:
+#   List of steps
+##########################
+function summary() {
   dialog::say "Steps included in this script:"
   cat $0 | grep '\[STEP' | grep -v "cat" | sed -r 's/[a-z_]* "(.*)"$/\t - \1/'
 }
 
-function summary() {
+##########################
+# Show summary of what to do after this script
+# Outputs:
+#   List of ideas
+##########################
+function what_to_do_now() {
   dialog::say "Current Git global configuration: \n\
 ***
 $(git config --global -l) \n\
