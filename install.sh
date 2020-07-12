@@ -1,4 +1,6 @@
 #!/bin/bash
+#
+# Installation script for git-toolset
 
 source "src/lib/dialog.sh"
 

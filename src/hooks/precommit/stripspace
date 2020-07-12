@@ -1,23 +1,29 @@
 #!/bin/bash
+#
+# Strip spaces
 
 function find_staged_files {
-    local staged_files=$(git status --short 2>&1 | grep -v "^??"| rev | cut -d' ' -f1 | rev)
-    echo $staged_files
+  local staged_files
+
+  staged_files=$(git status --short 2>&1 | grep -v "^??"| rev | cut -d' ' -f1 | rev)
+  echo ${staged_files}
 }
 
 function strip_ws_this_file {
-    local staged_file tmp_file
-    staged_file=$1
-    tmp_file=$(mktemp)
-    git stripspace < $staged_file > $tmp_file
-    cat $tmp_file > $staged_file
-    rm $tmp_file
+  local staged_file
+  local tmp_file
+
+  staged_file=$1
+  tmp_file=$(mktemp)
+  git stripspace < ${staged_file} > ${tmp_file}
+  cat ${tmp_file} > ${staged_file}
+  rm ${tmp_file}
 }
 
 staged_files=$(find_staged_files)
-for staged_file in $staged_files; do
-    printf "\t- Stripping [$staged_file]\n" 1>&2
-    strip_ws_this_file $staged_file
-    git add $staged_file
+for staged_file in ${staged_files}; do
+  printf "\t- Stripping [${staged_file}]\n" 1>&2
+  strip_ws_this_file ${staged_file}
+  git add ${staged_file}
 
 done

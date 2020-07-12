@@ -3,7 +3,7 @@
 # Set up global configuration of git
 
 here="$(dirname "$(readlink -f "$0")")"
-source  "${here}/lib/dialog.sh"
+source "${here}/lib/dialog.sh"
 
 ##########################
 # Main function
