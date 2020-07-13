@@ -1,4 +1,4 @@
-# git_toolset
+# git-toolset
 Scripts to simplify git usage.
 
 ## tl;dr: Quick installation and setup in your repo:
@@ -20,7 +20,7 @@ Install method generates a symlink at of `git-toolset.sh` file at `~/bin/` folde
 
 The script `git-toolset` enables the usage of this toolset everywhere in your code.
 
-## Global_setup
+## Global setup
 This script helps to set up an initial global configuration for git.
 It asks for the user name, the email, the default editor (`nano` recommended), if a `.gitignore_global` file should modify the prompt for adding a reference to the current branch.
 

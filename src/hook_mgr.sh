@@ -1,29 +1,26 @@
 #!/bin/bash
+#
+# Script for running hooks
 
 here="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-
-source "$here/extract_related_hooks.sh"
+source "${here}/lib/hook.sh"
 
 toolset_local=$(pwd)/.git/git-toolset
-path_to_config=$toolset_local/.config
+path_to_config=${toolset_local}/.config
 hook_name="$@"
 
-if [ ! -f "$path_to_config" ]; then
+if [[ ! -f "${path_to_config}" ]]; then
   exit
 fi
 
-candidates=$(extract_related_hooks $path_to_config $hook_name);
+candidates=$(hook::extract ${path_to_config} ${hook_name});
 
-for candidate in $candidates; do
-    IFS="="
-    read -ra splitted <<< "$candidate"
-    hook_name=${splitted[0]}
-    path=${splitted[1]}
-    echo "Running hook $hook_name:"
-    $($toolset_local/$path)
-    if [ $? != 0 ]; then
-        echo "Hook $hook_name failed. Aborting."
-        exit 1
-    fi
-    echo "Done."
+for candidate in ${candidates}; do
+  IFS="="
+  read -ra splitted <<< "${candidate}"
+  hook_name=${splitted[0]}
+  path=${splitted[1]}
+  full_path= ${toolset_local}/${path}
+  $(hook::run ${hook_name} ${full_path})
 done
+
