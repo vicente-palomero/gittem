@@ -3,12 +3,9 @@
 # Main script for git-toolset
 
 toolset_home="$(dirname "$(readlink -f "$0")")"
+source "${toolset_home}/src/lib/io.sh"
 
-function cleanInput() {
-  echo $1 | sed "s/'//g"
-}
-
-function version(){
+function version() {
   echo "Git toolset version 0.1.0"
 }
 
@@ -31,8 +28,8 @@ fi
 
 if [ $# -eq 0 ]; then
   echo "No arguments provided."
-  usage;
-  exit;
+  usage
+  exit
 fi
 
 set -- $options
@@ -40,13 +37,13 @@ set -- $options
 while [ $# -gt 0 ]
 do
   case $1 in
-    -g|--global) $toolset_home/src/global_setup.sh;;
+    -g|--global) ${toolset_home}/src/global_setup.sh;;
     -h|--help) usage ;;
-    -i|--install) $toolset_home/src/hook_setup.sh `cleanInput $(pwd)`;;
+    -i|--install) ${toolset_home}/src/hook_setup.sh $(io::clean $(pwd)) ;;
     -v|--version) version ;;
-    (--) shift;break;;
-    (-*) echo "$0: error - unrecognized option $2" 1>&2; exit 1;;
-    (*)  break;;
+    --) shift;break;;
+    -*) echo "$0: error - unrecognized option $2" 1>&2; exit 1;;
+    *)  break;;
   esac
   shift
 done

@@ -59,13 +59,20 @@ git hook \"${hook_path}\"" > ${hook_path}/${hook_name}
 ##########################
 function step_basic_config() {
   local message
+  local user
+  local email
+  local editor
+  local new_user
+  local new_email
+  local new_editor
+
   messsage=$1
 
   dialog::say "${message}"
 
   user=$(git config --global user.name)
   email=$(git config --global user.email)
-  editor="nano"
+  editor=$(git config --global core.editor) || "nano"
 
   new_user=$(dialog::fill "Git user name [${user}]:")
   if [[ ! -z ${new_user} ]] && [[ ${new_user} != ${user} ]]; then
@@ -207,15 +214,18 @@ function summary() {
 #   List of ideas
 ##########################
 function what_to_do_now() {
+  local editor
+
+  editor=$(git config --global core.editor)
   dialog::say "Current Git global configuration: \n\
 ***
 $(git config --global -l) \n\
 ***
 If you want to edit the configuration, please run: \n\
-\t ${new_editor} ~/.gitconfig \n\
+\t ${editor} ~/.gitconfig \n\
 
 If you want to edit the .gitignore_global file, please run: \n\
-\t ${new_editor} ~/.gitignore_global \n\
+\t ${editor} ~/.gitignore_global \n\
 (in case you want to tweak this file, you can find useful .gitignore configurations at: https://github.com/github/gitignore/) \n\
 
 And if you need to reload your .bashrc file, please run: \n\
@@ -224,3 +234,4 @@ And if you need to reload your .bashrc file, please run: \n\
 
 # Run main function
 main
+
