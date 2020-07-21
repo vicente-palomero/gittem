@@ -6,7 +6,7 @@ toolset_home="$(dirname "$(readlink -f "$0")")"
 source "${toolset_home}/src/lib/io.sh"
 
 function version() {
-  echo "Git toolset version 0.1.0"
+  echo "Git toolset version 0.1.1"
 }
 
 function usage(){

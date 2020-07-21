@@ -46,6 +46,8 @@ After running it, a folder `git-toolset` is created inside yout `.git` folder. T
 
 This `add_timestamp` hook will be executed each time you do a commit, and it adds a timestamp in the beginning of the commit message. If you want to add or remove other hooks, you have to edit this file following that format.
 
+In case you want to deactivate a hook, you can simply comment the line with a # in the beginning.
+
 ## Hooks
 `git-toolset` installs 3 different hooks:
 -. `tips` will give you some tips and useful tricks for git.
