@@ -1,7 +1,20 @@
 #!/bin/bash
 
-datetime=$(date +'[%Y-%m-%d %H:%M:%S]')
 commit_path=.git/COMMIT_EDITMSG
 
 content=$(cat ${commit_path})
-echo "${datetime} ${content}" > ${commit_path}
+
+function add_timestamp {
+    local content=$1
+    local content_clean=$(echo "$content" | grep -v "#")
+
+    if [[ ${content_clean:0:1} == "#" ]] || [[ ${content_clean} == "" ]] ; then
+	echo "${content}"
+    else
+	local datetime=$(date +'[%Y-%m-%d %H:%M:%S]')
+        echo "${datetime} ${content}"
+    fi
+}
+
+add_timestamp "${content}" > ${commit_path}
+
