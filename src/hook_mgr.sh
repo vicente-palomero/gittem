@@ -5,8 +5,8 @@
 here="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 source "${here}/lib/hook.sh"
 
-toolset_local=$(pwd)/.git/git-toolset
-path_to_config=${toolset_local}/.config
+gittem_local=$(pwd)/.git/gittem
+path_to_config=${gittem_local}/.config
 hook_name="$@"
 
 if [[ ! -f "${path_to_config}" ]]; then
@@ -20,7 +20,7 @@ for candidate in ${candidates}; do
   read -ra splitted <<< "${candidate}"
   hook_name=${splitted[0]}
   path=${splitted[1]}
-  full_path= ${toolset_local}/${path}
+  full_path= ${gittem_local}/${path}
   $(hook::run ${hook_name} ${full_path})
 done
 

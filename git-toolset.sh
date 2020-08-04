@@ -1,12 +1,12 @@
 #!/bin/bash
 #
-# Main script for git-toolset
+# Main script for gittem
 
-toolset_home="$(dirname "$(readlink -f "$0")")"
-source "${toolset_home}/src/lib/io.sh"
+gittem_home="$(dirname "$(readlink -f "$0")")"
+source "${gittem_home}/src/lib/io.sh"
 
 function version() {
-  echo "Git toolset version 0.1.1"
+  echo "Git gittem version 0.1.1"
 }
 
 function usage(){
@@ -37,9 +37,9 @@ set -- $options
 while [ $# -gt 0 ]
 do
   case $1 in
-    -g|--global) ${toolset_home}/src/global_setup.sh;;
+    -g|--global) ${gittem_home}/src/global_setup.sh;;
     -h|--help) usage ;;
-    -i|--install) ${toolset_home}/src/hook_setup.sh $(io::clean $(pwd)) ;;
+    -i|--install) ${gittem_home}/src/hook_setup.sh $(io::clean $(pwd)) ;;
     -v|--version) version ;;
     --) shift;break;;
     -*) echo "$0: error - unrecognized option $2" 1>&2; exit 1;;
