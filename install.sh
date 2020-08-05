@@ -1,18 +1,18 @@
 #!/bin/bash
 #
-# Installation script for git-toolset
+# Installation script for gittem
 
 source "src/lib/dialog.sh"
 
-dialog::say "Installing git-toolset.sh script into ~/bin/ folder"
+dialog::say "Installing gittem.sh script into ~/bin/ folder"
 
 if [ ! -d ~/bin/ ]; then
   mkdir -p ~/bin;
 fi
 
-ln -sf $(pwd)/git-toolset.sh ~/bin/git-toolset
+ln -sf $(pwd)/gittem.sh ~/bin/gittem
 
-dialog::say "DONE, there is a reference of git-toolset in the ~/bin folder\n
+dialog::say "DONE, there is a reference of gittem in the ~/bin folder\n
 If you want to add this to PATH, please execute:
   export PATH=\"~/bin:\$PATH\"
-With it, you can call these tools directly using 'git-toolset'."
+With it, you can call these tools directly using 'gittem'."

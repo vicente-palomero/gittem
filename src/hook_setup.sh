@@ -15,7 +15,7 @@ if [ ! -d "${project}" ]; then
 fi
 
 project_git="${project}/.git"
-config_path="${project}/.git/git-toolset"
+config_path="${project}/.git/gittem"
 config_file="${config_path}/.config"
 
 dialog::say "Creating [$config_file]"
@@ -23,7 +23,7 @@ mkdir -p ${config_path}
 cp ${here}/sample/hooks.ini.sample ${config_file}
 
 dialog::say "Installing hooks library"
-config_hooks_lib_path="${project}/.git/git-toolset/"
+config_hooks_lib_path="${project}/.git/gittem/"
 cp -r ${here}/hooks ${config_hooks_lib_path}
 
 dialog::say "Run git init for copying hook templates"
